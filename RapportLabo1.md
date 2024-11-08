@@ -112,3 +112,59 @@ On remarque que diviser toutes les valeurs par une constane (dans ce cas 3), div
 ```
 
 L'écart-type calculé avec les valeurs atypique et largement plus grand que sans. Ceci est normal mais montre qu'il faut faire attention lors de l'utilisation de celui-ci. C'est donc un indicateur non robuste car il est fortement influencé par les valeurs extrêmes.
+
+## Exercice 3
+
+### a) Tracer les boîtes à moustaches en parallèle en utilisant les commandes suivantes :
+```
+lblue<-"#528B8B"
+par(pty="s")
+boxplot(note~groupe, data=examen, ylim=c(1,6), xlab="groupe", varwidth=T, col=lblue, main="examen")
+abline(h=4, lty=2)
+```
+
+### b) Rajouter les bâtonnets des notes des étudiants des deux classes, sur le côté gauche des boîtes à moustaches pour la classe 𝐴 (side=2 comme argument de la fonction rug()) et sur le côté droite pour la classe 𝐵 (side=4 comme argument de la fonction rug()).
+```
+> note.A<-split(examen$note, examen$groupe)$A
+> note.B<-split(examen$note, examen$groupe)$B
+> rug(note.A,side=2)
+> rug(note.B,side=4)
+```
+
+### c) En se basant sur la Figure 6, existe-t-il une différence significative entre les deux groupes à l’examen de fin d’unité ?
+Pas particulièrement, les différences sont les suivantes:
+- Le groupe B à deux personnes ayant fait une note hors norme (1-2).
+- Le groupe B à une dispersion légèrement plus grande mais généralement c'est similaire au groupe A.
+- La médiane du groupe B est légèrement plus élevée.
+- Le groupe A n'a que 25% en dessous du 4, le groupe B en a plus.
+
+### d) Observe-t-on sur les boîtes à moustaches une différence entre les dispersions des deux groupes ?
+Oui, comme cité à la question précédente le groupe B est légèrement plus dispersé.
+
+### e) Calculer les écarts-types des deux groupes à l’aide des fonctions by() et sd().
+```
+> ecartsTypes <- by(examen$note, examen$groupe, sd)
+> print(ecartsTypes)
+examen$groupe: A
+[1] 0.7503156
+------------------------------------------------------------------------------------------ 
+examen$groupe: B
+[1] NA
+> ecartsTypes <- by(examen$note, examen$groupe, function(x) sd(x, na.rm = TRUE))
+> print(ecartsTypes)
+examen$groupe: A
+[1] 0.7503156
+------------------------------------------------------------------------------------------ 
+examen$groupe: B
+[1] 1.026574
+```
+
+Comme on le voit à la première tentative, le groupe B possède des valeurs nulles et donc il faut les enlever pour calculer l'écart-type.
+
+### f) Que peut-on déduire en comparant les conclusions établies en c., d. et e. ?
+Qu'en effet le groupe B à un plus grand écart entre les résultats des étudiants. Par contre puisque la médiane est plus élevée que le groupe A, ceci montre qu'il y a probablement des différences plus significatives entre les élèves.
+
+### À votre avis, entre les boîtes à moustaches en parallèle et le graphique tracé ci-dessus, lequel est le plus approprié ?
+Le graphique semble plus adapté car même s'il ne montre pas autant clairement les pourcentiles, il démontre plus de granularité.
+Nous pouvons par exemple voir que dans les deux groupes il y a un creux dans la grande masse de valeurs, c'est donc une répartition bimodale pour les deux.
+Le graphique donne une meilleure vision globale du niveau des étudiants.

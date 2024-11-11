@@ -417,3 +417,188 @@ Cette figure représente presque une image miroir de la figure 10, son coefficie
 Ca donne donc une valeur probable entre -1 et -0.9 car plus x augmente, plus y diminue.
 
 ## Exercise 6
+
+### a) Utiliser les librairies skimr et summarytools pour afficher les sorties qui permettent d’effectuer une analyse exploratoire des données observées. Pour la librairie skimr appliquer la fonction tbl_summary() à l’objet iris; appliquer la fonction skim() à l’objet iris pour la librairie skimr.
+```
+> install.packages("summarytools", type = "source")
+> install.packages("skimr", type = "source")
+> install.packages("gtsummary", type = "source")
+> library(summarytools)
+> library(skimr)
+> library(gtsummary)
+```
+
+`tbl_summary` fait partie du package [gtsummary](https://www.danieldsjoberg.com/gtsummary/articles/tbl_summary.html).
+
+```
+> tbl_summary(iris)
+```
+
+| Characteristic   | N = 1501            |
+|------------------|---------------------|
+| Sepal.Length     | 5.80 (5.10, 6.40)   |
+| Sepal.Width      | 3.00 (2.80, 3.30)   |
+| Petal.Length     | 4.35 (1.60, 5.10)   |
+| Petal.Width      | 1.30 (0.30, 1.80)   |
+| Species          |                     |
+| - setosa         | 50 (33%)            |
+| - versicolor     | 50 (33%)            |
+| - virginica      | 50 (33%)            |
+|                  |                     |
+| Median (Q1, Q3); n (%) 				 |
+
+```
+> skim(iris)
+── Data Summary ────────────────────────
+                           Values
+Name                       iris  
+Number of rows             150   
+Number of columns          5     
+_______________________          
+Column type frequency:           
+  factor                   1     
+  numeric                  4     
+________________________         
+Group variables            None  
+
+── Variable type: factor ────────────────────────────────────────────────────────────────────────────────────────────────
+  skim_variable n_missing complete_rate ordered n_unique top_counts               
+1 Species               0             1 FALSE          3 set: 50, ver: 50, vir: 50
+
+── Variable type: numeric ───────────────────────────────────────────────────────────────────────────────────────────────
+  skim_variable n_missing complete_rate mean    sd  p0 p25  p50 p75 p100 hist 
+1 Sepal.Length          0             1 5.84 0.828 4.3 5.1 5.8  6.4  7.9 ▆▇▇▅▂
+2 Sepal.Width           0             1 3.06 0.436 2   2.8 3    3.3  4.4 ▁▆▇▂▁
+3 Petal.Length          0             1 3.76 1.77  1   1.6 4.35 5.1  6.9 ▇▁▆▇▂
+4 Petal.Width           0             1 1.20 0.762 0.1 0.3 1.3  1.8  2.5 ▇▁▇▅▃
+```
+
+```
+> dfSummary(iris)
+Data Frame Summary  
+iris  
+Dimensions: 150 x 5  
+Duplicates: 1  
+
+-----------------------------------------------------------------------------------------------------------
+No   Variable       Stats / Values          Freqs (% of Valid)   Graph                 Valid      Missing  
+---- -------------- ----------------------- -------------------- --------------------- ---------- ---------
+1    Sepal.Length   Mean (sd) : 5.8 (0.8)   35 distinct values     . . : :             150        0        
+     [numeric]      min < med < max:                               : : : :             (100.0%)   (0.0%)   
+                    4.3 < 5.8 < 7.9                                : : : : :                               
+                    IQR (CV) : 1.3 (0.1)                           : : : : :                               
+                                                                 : : : : : : : :                           
+
+2    Sepal.Width    Mean (sd) : 3.1 (0.4)   23 distinct values           :             150        0        
+     [numeric]      min < med < max:                                     :             (100.0%)   (0.0%)   
+                    2 < 3 < 4.4                                        . :                                 
+                    IQR (CV) : 0.5 (0.1)                             : : : :                               
+                                                                 . . : : : : : :                           
+
+3    Petal.Length   Mean (sd) : 3.8 (1.8)   43 distinct values   :                     150        0        
+     [numeric]      min < med < max:                             :         . :         (100.0%)   (0.0%)   
+                    1 < 4.3 < 6.9                                :         : : .                           
+                    IQR (CV) : 3.5 (0.5)                         : :       : : : .                         
+                                                                 : :   . : : : : : .                       
+
+4    Petal.Width    Mean (sd) : 1.2 (0.8)   22 distinct values   :                     150        0        
+     [numeric]      min < med < max:                             :                     (100.0%)   (0.0%)   
+                    0.1 < 1.3 < 2.5                              :       . .   :                           
+                    IQR (CV) : 1.5 (0.6)                         :       : :   :   .                       
+                                                                 : :   : : : . : : :                       
+
+5    Species        1. setosa               50 (33.3%)           IIIIII                150        0        
+     [factor]       2. versicolor           50 (33.3%)           IIIIII                (100.0%)   (0.0%)   
+                    3. virginica            50 (33.3%)           IIIIII                                    
+-----------------------------------------------------------------------------------------------------------
+```
+
+### b) La distribution de la largeur du sépale (Sepal.Width) est-elle plutôt symétrique ?
+La distribution est en effet relativement symétrique. On voit ça grace aux graphes des fonctions `skim()` et `dfsummary()`. Pour un meilleur visuel on peut générer nous même le graphique.
+```
+> hist(iris$Sepal.Width, main = "Distribution de la largeur du sépale", xlab = "Sepal.Width", col = "lightblue")
+```
+
+### c) La distribution de la largeur du pétale (Petal.Width) est-elle unimodale ou bimodale ?
+Tout comme pour la `Sepal.Width`, on peut générer nous même le graphique pour plus facilement l'analyser.
+```
+> hist(iris$Petal.Width, main = "Distribution de la largeur du pétale", xlab = "Petal.Width", col = "lightblue")
+```
+On voit ensuite que la distribution est bimodale avec un pic vers 0.1 cm et un deuxième vers 1.3 cm.
+
+### d) Tracer le nuage de points de la largeur (Petal.Width) versus la longueur (Petal.Length) des pétales des iris en utilisant les librairies ggplot2 et ggforce.
+```
+pCol <- c('#057076', '#ff8301', '#bf5ccb')
+
+plot.iris<-ggplot(iris, aes(x=Petal.Length, y=Petal.Width, col=Species)) +
+scale_color_manual(values=pCol) +
+scale_x_continuous(breaks=seq(0.5, 7.5, by=1), limits=c(0.5, 7.5)) +
+scale_y_continuous(breaks=seq(-0.5, 3, by=0.5), limits=c(-0.5, 3)) +
+labs(title="Edgar Anderson's Iris Data",
+x="Petal Length",
+y="Petal Width") +
+theme(plot.title=element_text(size=12, hjust=.5),
+axis.title=element_text(size=10, vjust=-2),
+axis.text=element_text(size=10, vjust=-2)) +
+geom_point(aes(color=Species), alpha=.6, size=3) +
+theme_minimal()
+
+plot.iris +
+ggforce::geom_mark_ellipse(
+	aes(fill=Species, label=Species),
+	alpha=.15, show.legend=FALSE
+)
+```
+
+```
+> install.packages("ggforce", type = "source")
+> library(ggforce)
+```
+
+### e) En se basant sur le graphique de nuage de points, existe-t-il une relation entre la largeur et la longueur des pétales des iris ? Dans l’affirmative, de quelle nature est-elle ?
+Oui, on voit bien qu'il y a une correlation entre les deux car les points suivent approximativement une droite de pente constante est positive.
+Ceci veut donc dire qu'il y a un coefficient de correlation positif et approchant 1 entre la largeur et longueur de pétales des iris.
+
+Plus les pétales sont large, plus elles sont longue.
+
+### f) Remarque-t-on des observations inhabituelles dans le graphique de nuage de points ?
+Non, il ne semble y avoir aucune valeur inhabituelle sur le graphique.
+
+### g) Déterminer la corrélation entre la largeur et la longueur des pétales des iris en utilisant la fonction cor().
+```
+> cor(iris$Petal.Length, iris$Petal.Width)
+[1] 0.9628654
+```
+
+### h) Quelle valeur attribueriez-vous à la longueur des pétales des iris pour distinguer les iris Setosa des deux autres espèces ?
+Pour être large au niveau de l'estimation on peut attribuer les valeurs entre 0.5 et 2.5 car aucune pétale des deux autres espèces n'a été mesurée dans cette intervalle et elle englobe toutes les mesures des pétales de l'espèce Setosa.
+
+### i) Des animations peuvent être créées dans R en utilisant la librairie gganimate. Un exemple peut être conçu en utilisant le code ci-dessous.
+```
+library(gganimate)
+
+anim<-plot.iris+
+	transition_states(Species,
+		transition_length = 2,
+		state_length = 1)
+anim
+
+anim +
+	enter_fade() +
+	exit_shrink() +
+	ggtitle('Now showing {closest_state}', subtitle = 'Frame {frame} of {nframes}')
+```
+
+### j) (En option bonus) Installer la librairie reticulate qui permet de faire du Python à partir de RStudio IDE. Fixer ensuite l’interpréteur Python dans la rubrique Python de la boîte de dialogue Options. Cette boîte de dialogue s’affiche à l’écran en utilisant le menu Tools puis Global Options… de RStudio IDE.
+```
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+iris_py = r.iris
+tab = {'setosa': 0, 'versicolor': 1, 'virginica': 2}
+plt.figure(figsize=(10, 8))
+plt.scatter(iris_py['Petal.Length'], iris_py['Petal.Width'], c=iris_py['Species'].map(tab), plt.title("Iris Dataset")
+plt.xlabel("petal length [cm]")
+plt.ylabel("petal width [cm]")
+plt.show()
+```

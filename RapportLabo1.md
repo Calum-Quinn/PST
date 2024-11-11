@@ -401,3 +401,19 @@ Le résultat est maintenant différent car l'étendue interquartiles minimum est
 
 ## Exercice 5
 
+### Estimer et justifier les valeurs des coefficients de corrélation des séries de données à l’aide de leurs graphiques de nuage de points tracés dans la Figure 10, la Figure 11, la Figure 12 et la Figure 13.
+
+#### Figure 10
+Le coefficient de corrélation se trouve probablement entre 0.9 et 1. Il y a une forte corrélation car il n'y a pas de valeurs particulièrement extrêmes.
+
+#### Figure 11
+Cette fois le coefficient tend vers 0 car aucune corrélation n'est visible, les valeurs sont presque uniformément réparti sur toute l'espace de définition.
+
+#### Figure 12
+Le coefficient de corrélation n'est pas linéaire car les points se trouvent sur une forme hyperbolique 
+
+#### Figure 13
+Cette figure représente presque une image miroir de la figure 10, son coefficient aura donc le même ordre de grandeur 0.9 à 1 mais cette fois il sera négatif.
+Ca donne donc une valeur probable entre -1 et -0.9 car plus x augmente, plus y diminue.
+
+## Exercise 6
